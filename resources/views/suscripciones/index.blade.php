@@ -5,17 +5,20 @@
 @section('content_header')
 <h1>Suscripciones Activas</h1>
 @stop
-
+@extends('layouts.extensiones')
 @section('content')
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Control de Membresías</h3>
         <div class="card-tools">
-            <a href="{{ route('suscripciones.create') }}" class="btn btn-primary btn-sm">Nueva Suscripción</a>
+
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalCrear">
+                <i class="fas fa-plus-circle"></i> Nueva Suscripción
+            </button>
         </div>
     </div>
-    <div class="card-body p-0">
-        <table class="table table-hover">
+    <div class="card-body p-4">
+        <table id="tabla-general" class="table table-bordered table-striped datatable">
             <thead>
                 <tr>
                     <th>Cliente</th>
@@ -55,4 +58,35 @@
         </table>
     </div>
 </div>
+@include('suscripciones.modal_crear')
 @endsection
+@section('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @if(session('info'))
+        Swal.fire({
+            icon: 'success',
+            title: '¡Operación exitosa!',
+            text: '{{ session("info") }}',
+            timer: 3000,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end',
+            timerProgressBar: true
+        });
+        @endif
+        @if(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: '¡Error!',
+            text: '{{ session("error") }}',
+            timer: 3000,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end',
+            timerProgressBar: true
+        })
+        @endif
+    });
+</script>
+@stop

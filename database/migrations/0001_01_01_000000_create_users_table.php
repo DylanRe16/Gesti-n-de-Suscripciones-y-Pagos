@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
 
             // --- AÑADIMOS EL ROL AQUÍ ---
-            $table->enum('rol', ['admin', 'empleado'])->default('empleado');
+            $table->enum('rol', ['admin', 'vendedor'])->default('vendedor');
             // ----------------------------
 
             $table->rememberToken();

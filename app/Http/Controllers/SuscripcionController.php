@@ -15,14 +15,10 @@ class SuscripcionController extends Controller
     {
         // Traemos las suscripciones con sus relaciones para no saturar la BD
         $suscripciones = Suscripcion::with(['cliente', 'plan'])->get();
-
-        return view('suscripciones.index', compact('suscripciones'));
-    }
-    public function create()
-    {
         $clientes = Cliente::where('activo', true)->get();
         $planes = Plan::all();
-        return view('suscripciones.create', compact('clientes', 'planes'));
+
+        return view('suscripciones.index', compact('suscripciones', 'clientes', 'planes'));
     }
 
     public function store(Request $request)
@@ -55,6 +51,6 @@ class SuscripcionController extends Controller
             'estado_pago'    => 'pendiente',
         ]);
 
-        return redirect()->route('suscripciones.index')->with('info', 'Suscripción activa y Factura ' . $nro_factura . ' generada.');
+        return redirect()->back()->with('info', 'Suscripción activa y Factura ' . $nro_factura . ' generada.');
     }
 }

@@ -56,4 +56,72 @@
         </div>
     </div>
 </div>
+<div class="row">
+
+    <div class="col-md-4">
+        {{-- Aquí podrías poner una lista de clientes recientes --}}
+        <div class="info-box bg-light">
+            <span class="info-box-icon"><i class="fas fa-chart-pie"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">Proyección Total</span>
+                <span class="info-box-number">${{ number_format($pagado + $pendiente + $mora, 2) }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+@stop
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    $(document).ready(function() {
+        console.log("Cargando gráfica..."); // Esto aparecerá en F12 si el script corre
+
+        var ctx = document.getElementById('miGrafica');
+
+        // Si el elemento no existe, nos avisará en la consola
+        if (!ctx) {
+            console.error("No se encontró el elemento canvas 'miGrafica'");
+            return;
+        }
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Pagado', 'Pendiente', 'En Mora'],
+                datasets: [{
+                    label: 'Monto Total ($)',
+                    data: [{
+                        {
+                            $pagado
+                        }
+                    }, {
+                        {
+                            $pendiente
+                        }
+                    }, {
+                        {
+                            $mora
+                        }
+                    }],
+                    backgroundColor: [
+                        'rgba(40, 167, 69, 0.7)',
+                        'rgba(255, 193, 7, 0.7)',
+                        'rgba(220, 53, 69, 0.7)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
 @stop

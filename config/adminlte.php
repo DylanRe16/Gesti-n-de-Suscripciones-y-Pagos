@@ -196,7 +196,7 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    'classes_sidebar' => 'sidebar-light-olive elevation-4',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
@@ -238,7 +238,7 @@ return [
 
     'right_sidebar' => false,
     'right_sidebar_icon' => 'fas fa-cogs',
-    'right_sidebar_theme' => 'dark',
+    'right_sidebar_theme' => 'olive',
     'right_sidebar_slide' => true,
     'right_sidebar_push' => true,
     'right_sidebar_scrollbar_theme' => 'os-theme-light',
@@ -259,6 +259,7 @@ return [
     'use_route_url' => false,
     'dashboard_url' => 'home',
     'logout_url' => 'logout',
+    'logout_method' => 'POST',
     'login_url' => 'login',
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
@@ -299,26 +300,42 @@ return [
     */
 
     'menu' => [
+        [
+            'type'         => 'navbar-search',
+            'text'         => 'Buscar cliente...',
+            'topnav_right' => true, // Lo pone en la esquina superior derecha
+            'url'          => 'buscar-cliente', // La URL a la que enviará el nombre
+            'method'       => 'get',
+            'input_name'   => 'q',
+        ],
         ['header' => 'GESTIÓN PRINCIPAL'],
         [
             'text' => 'Panel de Control',
-            'url'  => 'home',
+            'url'  => 'dashboard',
             'icon' => 'fas fa-fw fa-tachometer-alt',
+            'can'  => 'eliminar.clientes', // Solo el Admin lo verá
         ],
         [
             'text' => 'Clientes',
             'url'  => 'clientes',
             'icon' => 'fas fa-fw fa-users',
+            'can'  => 'gestionar.clientes',
+        ],
+        [
+            'text' => 'ADMINISTRACIÓN',
+            'can'    => 'eliminar.clientes',
         ],
         [
             'text' => 'Planes de Servicio',
             'url'  => 'planes',
             'icon' => 'fas fa-fw fa-box',
+            'can'  => 'eliminar.clientes',
         ],
         [
             'text' => 'Suscripciones',
             'url'  => 'suscripciones',
             'icon' => 'fas fa-fw fa-file-contract',
+            'can'  => 'gestionar.pagos',
         ],
         [
             'text'    => 'Facturación',
@@ -327,12 +344,20 @@ return [
                 [
                     'text' => 'Pagos Pendientes',
                     'url'  => 'facturas/pendientes',
+                    'can'  => 'gestionar.pagos',
                 ],
                 [
                     'text' => 'Historial de Pagos',
                     'url'  => 'facturas/historial',
+                    'can'  => 'gestionar.pagos',
                 ],
             ],
+        ],
+        [
+            'text' => 'Gestión de Usuarios',
+            'url'  => 'usuarios',
+            'icon' => 'fas fa-users',
+            'can'  => 'eliminar.clientes', // Para que solo el Admin vea el acceso
         ],
     ],
 
@@ -372,7 +397,7 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
@@ -407,7 +432,7 @@ return [
             ],
         ],
         'Chartjs' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
@@ -417,12 +442,12 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
                     'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
+                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@11',
                 ],
             ],
         ],

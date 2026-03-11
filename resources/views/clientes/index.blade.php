@@ -4,17 +4,21 @@
 
 @section('content_header')
 <h1>Gestión de Clientes</h1>
+
 @stop
+@extends('layouts.extensiones')
 @section('content')
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Clientes Registrados</h3>
         <div class="card-tools">
-            <a href="{{ route('clientes.create') }}" class="btn btn-primary btn-sm">Nuevo Cliente</a>
+            <button class="btn btn-success" data-toggle="modal" data-target="#modalCrear">
+                <i class="fas fa-plus"></i> Nuevo Cliente
+            </button>
         </div>
     </div>
-    <div class="card-body p-0">
-        <table class="table table-striped">
+    <div class="card-body p-4">
+        <table id="tabla-general" class="table table-bordered table-striped datatable">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -40,7 +44,9 @@
                         @endif
                     </td>
                     <td>
-                        <button class="btn btn-info btn-sm">Ver</button>
+                        <a href="{{ route('clientes.show', $cliente->id) }}" class="btn btn-sm btn-info">
+                            <i class="fas fa-eye"></i> Perfil
+                        </a>
                         <button class="btn btn-warning btn-sm">Editar</button>
                     </td>
                 </tr>
@@ -50,13 +56,34 @@
     </div>
 </div>
 @stop
-
-@section('css')
-{{-- Aquí puedes poner CSS extra si quieres --}}
-@stop
-
+@include('clientes.modal_crear')
 @section('js')
 <script>
-    console.log('¡AdminLTE cargado!');
+    document.addEventListener('DOMContentLoaded', function() {
+        @if(session('info'))
+        Swal.fire({
+            icon: 'success',
+            title: '¡Operación exitosa!',
+            text: '{{ session("info") }}',
+            timer: 3000,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end',
+            timerProgressBar: true
+        });
+        @endif
+        @if(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: '¡Error!',
+            text: '{{ session("error") }}',
+            timer: 3000,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end',
+            timerProgressBar: true
+        })
+        @endif
+    });
 </script>
 @stop
