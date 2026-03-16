@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('plan_id')->constrained('planes');
             $table->decimal('precio_fijo', 10, 2);
             $table->date('fecha_inicio');
+            $table->integer('duracion_meses');
             $table->date('fecha_fin');
             $table->enum('estado', ['activa', 'vencida', 'cancelada'])->default('activa');
             $table->timestamps();

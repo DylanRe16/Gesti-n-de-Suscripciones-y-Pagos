@@ -19,10 +19,6 @@
                         <input type="number" name="precio" step="0.01" class="form-control" placeholder="0.00" required>
                     </div>
                     <div class="form-group">
-                        <label>Duración (Meses)</label>
-                        <input type="number" name="duracion_meses" class="form-control" value="1" required>
-                    </div>
-                    <div class="form-group">
                         <label>Descripción</label>
                         <textarea name="descripcion" class="form-control" rows="2" required></textarea>
                     </div>

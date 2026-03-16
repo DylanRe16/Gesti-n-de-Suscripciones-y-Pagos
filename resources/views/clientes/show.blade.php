@@ -17,7 +17,7 @@
                     <img class="profile-user-img img-fluid img-circle" src="https://ui-avatars.com/api/?name={{ urlencode($cliente->nombre_completo) }}" alt="User profile picture">
                 </div>
                 <h3 class="profile-username text-center">{{ $cliente->nombre_completo }}</h3>
-                <p class="text-muted text-center">{{ $cliente->id_fiscal }}</p>
+                <p class="text-muted text-center">{{ $cliente->documento }}</p>
                 <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
                         <b>Estado</b> <a class="float-right"><span class="badge badge-{{ $cliente->activo ? 'success' : 'danger' }}">{{ $cliente->activo ? 'Activo' : 'Inactivo' }}</span></a>
@@ -50,6 +50,7 @@
                                     <th>Inicio</th>
                                     <th>Vencimiento</th>
                                     <th>Estado</th>
+                                    <th>Operador</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,7 +59,8 @@
                                     <td>{{ $sub->plan->nombre_plan }}</td>
                                     <td>{{ $sub->fecha_inicio }}</td>
                                     <td>{{ $sub->fecha_fin }}</td>
-                                    <td><span class="badge badge-info">{{ $sub->estado }}</span></td>
+                                    <td><span class="badge badge-info {{ $sub->estado == 'activa' ? 'bg-success' : 'bg-warning' }}">{{ $sub->estado }}</span></td>
+                                    <td>{{ $sub->user->name }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -73,7 +75,7 @@
                                     <th>Nro</th>
                                     <th>Monto</th>
                                     <th>Estado</th>
-                                    <th>Acción</th>
+                                    <th>Marca de Pago</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -82,8 +84,8 @@
                                 <tr>
                                     <td>{{ $fac->nro_factura }}</td>
                                     <td>${{ $fac->monto }}</td>
-                                    <td>{{ $fac->estado_pago }}</td>
-                                    <td><a href="{{ route('facturas.pdf', $fac) }}" class="btn btn-xs btn-danger">PDF</a></td>
+                                    <td><span class="badge badge-{{ $fac->estado_pago == 'pagada' ? 'success' : 'warning' }}">{{ $fac->estado_pago }}</span></td>
+                                    <td>fecha de pago: {{ \Carbon\Carbon::parse($fac->pagado_el)->format('d/m/Y') }}<br> Usuario: {{ $fac->operador->name }} </td>
                                 </tr>
                                 @endforeach
                                 @endforeach

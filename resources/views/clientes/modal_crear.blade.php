@@ -9,6 +9,7 @@
             <form action="{{ route('clientes.store') }}" method="POST">
                 @csrf
                 <div class="card-body">
+
                     <div class="form-group">
                         <label>Nombre Completo</label>
                         <input type="text" name="nombre_completo" class="form-control" value="{{ old('nombre_completo') }}">
@@ -21,8 +22,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>ID Fiscal (DNI/RUC)</label>
-                                <input type="text" name="id_fiscal" class="form-control" value="{{ old('id_fiscal') }}" required>
+                                <label>Nro. Documento</label>
+                                <input type="text" name="documento" class="form-control" value="{{ old('documento') }}" required>
                             </div>
                         </div>
                         <div class="col-md-6">

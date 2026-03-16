@@ -5,16 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Cliente; // No olvides importar el modelo
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use App\Models\Suscripcion;
+use App\Models\Plan;
+use App\Models\Factura;
+use App\Models\User;
 
 class ClienteController extends Controller
 {
     public function index()
     {
+        $suscripciones = Suscripcion::with(['cliente', 'plan'])->get();
+        $clientes = Cliente::where('activo', true)->get();
+        $planes = Plan::all();
+        $user = User::all();
         // Traemos todos los clientes de Postgres
         $clientes = Cliente::all();
 
         // Enviamos los datos a la vista 'clientes.index'
-        return view('clientes.index', compact('clientes'));
+        return view('clientes.index', compact('clientes', 'suscripciones', 'planes', 'user'));
     }
     public function create()
     {
@@ -23,7 +31,7 @@ class ClienteController extends Controller
     public function show(Cliente $cliente)
     {
         // Cargamos las suscripciones, el plan de cada una y las facturas
-        $cliente->load(['suscripciones.plan', 'suscripciones.facturas']);
+        $cliente->load(['suscripciones.plan', 'suscripciones.facturas', 'suscripciones.user', 'suscripciones.facturas.operador']);
 
         return view('clientes.show', compact('cliente'));
     }
@@ -33,11 +41,11 @@ class ClienteController extends Controller
         // 1. Validar los datos
         $request->validate([
             'nombre_completo' => 'required|min:3',
-            'id_fiscal' => 'required|numeric',
+            'documento' => 'required|numeric',
             'email' => 'required|email',
             'telefono' => 'nullable',
         ]);
-        $busqueda_cliente_existente = Cliente::where('id_fiscal', $request->id_fiscal)->first();
+        $busqueda_cliente_existente = Cliente::where('documento', $request->documento)->first();
         if ($busqueda_cliente_existente) {
             return back()->with('error', 'El cliente ya se encuentra registrado');
         }
@@ -58,7 +66,7 @@ class ClienteController extends Controller
 
         // Buscamos clientes que coincidan con el nombre o el ID Fiscal
         $clientes = Cliente::where('nombre_completo', 'ILIKE', "%{$query}%")
-            ->orWhere('id_fiscal', 'ILIKE', "%{$query}%")
+            ->orWhere('documento', 'ILIKE', "%{$query}%")
             ->get();
 
         // Si solo hay un resultado, vamos directo al show

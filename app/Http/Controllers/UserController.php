@@ -20,10 +20,15 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|',
+            'cedula' => 'required|string|max:10',
+            'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:8',
             'role' => 'required',
         ]);
+        $busqueda_cedula_existente = User::where('cedula', $request->cedula)->first();
+        if ($busqueda_cedula_existente) {
+            return back()->with('error', 'La cédula ya se encuentra registrada');
+        }
         $busqueda_email_existente = User::where('email', $request->email)->first();
         if ($busqueda_email_existente) {
             return back()->with('error', 'El correo ya se encuentra registrado');

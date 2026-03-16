@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Factura;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf; // Importar la librería arriba
+use App\Models\Suscripcion;
+use App\Models\Plan;
+use Illuminate\Support\Facades\Auth;
+
 
 class FacturaController extends Controller
 {
@@ -13,7 +17,8 @@ class FacturaController extends Controller
         // Actualizamos el estado y la fecha de pago
         $factura->update([
             'estado_pago' => 'pagada',
-            'pagado_el' => now()
+            'pagado_el' => now(),
+            'usuario_pago' => Auth::user()->id
         ]);
 
         return redirect()->back()->with('info', '¡Pago registrado con éxito!');

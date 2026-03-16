@@ -22,6 +22,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'cedula',
         'email',
         'password',
         'role',
@@ -49,5 +50,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    // app/Models/User.php
+
+    public function suscripciones()
+    {
+        return $this->hasMany(Suscripcion::class);
+    }
+    public function facturas()
+    {
+        return $this->hasMany(Factura::class);
     }
 }

@@ -319,7 +319,7 @@ return [
             'text' => 'Clientes',
             'url'  => 'clientes',
             'icon' => 'fas fa-fw fa-users',
-            'can'  => 'gestionar.clientes',
+            'can'  => 'gestionar.pagos',
         ],
         [
             'text' => 'ADMINISTRACIÓN',
@@ -331,12 +331,12 @@ return [
             'icon' => 'fas fa-fw fa-box',
             'can'  => 'eliminar.clientes',
         ],
-        [
+        /*   [
             'text' => 'Suscripciones',
             'url'  => 'suscripciones',
             'icon' => 'fas fa-fw fa-file-contract',
             'can'  => 'gestionar.pagos',
-        ],
+        ], */
         [
             'text'    => 'Facturación',
             'icon'    => 'fas fa-fw fa-wallet',

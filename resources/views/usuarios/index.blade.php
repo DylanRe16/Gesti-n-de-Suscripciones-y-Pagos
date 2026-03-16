@@ -58,7 +58,7 @@
         <table id="tabla-general" class="table table-bordered table-striped datatable">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Cedula</th>
                     <th>Nombre</th>
                     <th>Email</th>
                     <th>Rol</th>
@@ -69,10 +69,10 @@
             <tbody>
                 @foreach($usuarios as $user)
                 <tr style="{{ !$user->estado ? 'opacity: 0.5; background-color: #f8d7da;' : '' }}">
-                    <td>{{ $user->id }}</td>
+                    <td>{{ $user->cedula }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ $user->rol }}</td>
+                    <td>{{ $user->role }}</td>
                     <td>
                         @if($user->estado)
                         <span class="badge badge-success">Activo</span>

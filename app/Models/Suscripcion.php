@@ -13,8 +13,10 @@ class Suscripcion extends Model
         'plan_id',
         'precio_fijo',
         'fecha_inicio',
+        'duracion_meses',
         'fecha_fin',
-        'estado'
+        'estado',
+        'user_id'
     ];
     public function cliente()
     {
@@ -29,5 +31,13 @@ class Suscripcion extends Model
     public function facturas()
     {
         return $this->hasMany(Factura::class, 'suscripcion_id');
+    }
+    public function operador()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

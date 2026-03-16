@@ -11,7 +11,9 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Clientes Registrados</h3>
-        <div class="card-tools">
+        <div class="card-tools"> <button class="btn btn-primary" data-toggle="modal" data-target="#modalCrear2">
+                <i class="fas fa-plus-circle"></i> Nueva Suscripción
+            </button>
             <button class="btn btn-success" data-toggle="modal" data-target="#modalCrear">
                 <i class="fas fa-plus"></i> Nuevo Cliente
             </button>
@@ -23,18 +25,19 @@
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>ID Fiscal</th>
+                    <th>Nro. Documento</th>
                     <th>Email</th>
                     <th>Estado</th>
                     <th style="width: 150px">Acciones</th>
                 </tr>
             </thead>
             <tbody>
+
                 @foreach($clientes as $cliente)
                 <tr>
                     <td>{{ $cliente->id }}</td>
                     <td>{{ $cliente->nombre_completo }}</td>
-                    <td>{{ $cliente->id_fiscal }}</td>
+                    <td>{{ $cliente->documento }}</td>
                     <td>{{ $cliente->email }}</td>
                     <td>
                         @if($cliente->activo)
@@ -55,8 +58,9 @@
         </table>
     </div>
 </div>
-@stop
 @include('clientes.modal_crear')
+@include('suscripciones.modal_crear')
+@stop
 @section('js')
 <script>
     document.addEventListener('DOMContentLoaded', function() {

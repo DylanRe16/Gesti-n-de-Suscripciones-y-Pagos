@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('fecha_limite');
             $table->enum('estado_pago', ['pagada', 'pendiente', 'mora'])->default('pendiente');
             $table->timestamp('pagado_el')->nullable();
+            $table->foreignId('usuario_pago')->nullable()->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

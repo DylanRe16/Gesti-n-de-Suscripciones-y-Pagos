@@ -21,7 +21,7 @@ class PlanController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             'precio' => 'required|numeric',
-            'duracion_meses' => 'required|numeric',
+
             'descripcion' => 'required|string',
         ]);
 
@@ -29,7 +29,7 @@ class PlanController extends Controller
         $plan->nombre_plan = $request->input('nombre');
         $plan->descripcion = $request->input('descripcion');
         $plan->precio = $request->input('precio');
-        $plan->meses = $request->input('duracion_meses');
+
         $plan->save();
         return redirect()->back()->with('success', 'Plan creado con exito');
     }
