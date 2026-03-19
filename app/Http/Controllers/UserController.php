@@ -34,6 +34,7 @@ class UserController extends Controller
             return back()->with('error', 'El correo ya se encuentra registrado');
         }
         User::create([
+            'cedula' => $request->cedula,
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),

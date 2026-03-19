@@ -16,4 +16,5 @@ return [
     'important' => 'Importante',
     'warning' => 'Advertencia',
     'information' => 'Información',
+    'log_out' => 'Cerrar sesión'
 ];

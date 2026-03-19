@@ -11,47 +11,7 @@
     </button>
 </div>
 @stop
-@if(session('info'))
-@section('js')
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        @if(session('info'))
-        Swal.fire({
-            icon: 'success',
-            title: '¡Operación exitosa!',
-            text: '{{ session("info") }}',
-            timer: 3000,
-            showConfirmButton: false,
-            toast: true,
-            position: 'top-end',
-            timerProgressBar: true
-        });
-        @endif
 
-    });
-</script>
-@stop
-@endif
-@if(session('error'))
-@section('js')<script>
-    document.addEventListener('DOMContentLoaded', function() {
-
-        @if(session('error'))
-        Swal.fire({
-            icon: 'error',
-            title: '¡Error!',
-            text: '{{ session("error") }}',
-            timer: 3000,
-            showConfirmButton: false,
-            toast: true,
-            position: 'top-end',
-            timerProgressBar: true
-        })
-        @endif
-    });
-</script>
-@stop
-@endif
 @section('content')
 <div class="card">
     <div class="card-body">
@@ -100,6 +60,45 @@
         </table>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<script>
+    // 1. Función GLOBAL para confirmar el pago
+    window.confirmarPago = function(facturaId) {
+        Swal.fire({
+            title: '¿Confirmar pago?',
+            text: "Esta acción marcará la factura como pagada.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, pagar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var formulario = document.getElementById('form-pagar-' + facturaId);
+                if (formulario) {
+                    formulario.submit();
+                }
+            }
+        });
+    }
+
+    // 2. Detector de mensajes de éxito (Se ejecuta al cargar la página)
+    document.addEventListener('DOMContentLoaded', function() {
+        @if(session('info'))
+        Swal.fire({
+            icon: 'success',
+            title: '¡Operación exitosa!',
+            text: '{{ session("info") }}',
+            timer: 3000,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top-end',
+            timerProgressBar: true
+        });
+        @endif
+    });
+</script>
 @include('usuarios.modal_crear')
 @stop

@@ -300,6 +300,7 @@ return [
     */
 
     'menu' => [
+
         [
             'type'         => 'navbar-search',
             'text'         => 'Buscar cliente...',
@@ -316,10 +317,10 @@ return [
             'can'  => 'eliminar.clientes', // Solo el Admin lo verá
         ],
         [
-            'text' => 'Clientes',
+            'text' => 'Gestión de Clientes',
             'url'  => 'clientes',
             'icon' => 'fas fa-fw fa-users',
-            'can'  => 'gestionar.pagos',
+
         ],
         [
             'text' => 'ADMINISTRACIÓN',
@@ -344,12 +345,12 @@ return [
                 [
                     'text' => 'Pagos Pendientes',
                     'url'  => 'facturas/pendientes',
-                    'can'  => 'gestionar.pagos',
+
                 ],
                 [
                     'text' => 'Historial de Pagos',
                     'url'  => 'facturas/historial',
-                    'can'  => 'gestionar.pagos',
+                    // 'can'  => 'gestionar.pagos',
                 ],
             ],
         ],

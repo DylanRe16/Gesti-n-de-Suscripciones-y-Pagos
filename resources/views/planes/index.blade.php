@@ -20,28 +20,34 @@
 <div class="container-fluid">
     <div class="row">
         @forelse($planes as $plan)
-        <div class="col-md-4">
+        <div class="col-md-3 mb-4">
             <div class="card card-outline card-primary shadow-sm">
                 <div class="card-header">
-                    <h3 class="card-title font-weight-bold">{{ $plan->nombre_plan }}</h3>
+                    <h3 class="card-title font-weight-bold ">{{ $plan->nombre_plan }}</h3>
                 </div>
                 <div class="card-body">
                     <div class="text-center mb-3">
                         <h2 class="text-success font-weight-bold">${{ number_format($plan->precio, 2) }}</h2>
-                        <span class="text-muted">Duración: {{ $plan->duracion_meses }} mes(es)</span>
+                        <!-- <span class="text-muted">Duración: {{ $plan->duracion_meses }} mes(es)</span> -->
                     </div>
                     <p class="text-secondary small">{{ $plan->descripcion ?? 'Sin descripción disponible.' }}</p>
                 </div>
-                <div class="card-footer d-flex justify-content-between">
-                    <a href="#" class="btn btn-sm btn-info">
-                        <i class="fas fa-edit"></i> Editar
-                    </a>
-                    <form action="{{ route('planes.destroy', $plan) }}" method="POST">
-                        @csrf @method('DELETE')
-                        <button class="btn btn-sm btn-outline-danger">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </form>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-6"> <a href="#" class="btn btn-sm btn-info">
+                                <i class="fas fa-edit"></i> Editar
+                            </a></div>
+                        <div class="col-md-6 row justify-content-end">
+                            <form action="{{ route('planes.destroy', $plan) }}" method="POST">
+                                @csrf @method('DELETE')
+                                <button class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+
+
+                    </div>
                 </div>
             </div>
         </div>
